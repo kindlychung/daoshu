@@ -19,7 +19,7 @@ void ArcProgress::paintEvent(QPaintEvent *) {
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(QPen(arcColor, 15));
     QRectF rect(padding, padding, arcWidth, arcWidth);
-    painter.drawArc(rect, 90 * 16, (360 * nSec / totalSec) * 16);
+    painter.drawArc(rect, 90 * 16, (360 * nMilliSec / totalMilliSec) * 16);
     painter.save();
     QColor tickColor(225, 177, 177, 199);
     painter.setPen(QPen(tickColor, 3));
@@ -28,7 +28,7 @@ void ArcProgress::paintEvent(QPaintEvent *) {
     auto radius = arcWidth / 2;
     QRectF rectText(-radius, -15, arcWidth, 30);
     auto textOption = QTextOption(Qt::AlignCenter);
-    if (nSec) {
+    if (nMilliSec) {
         painter.drawText(rectText, "Counting...", textOption);
     } else {
         painter.drawText(rectText, "Time is up!", textOption);
@@ -41,9 +41,11 @@ void ArcProgress::paintEvent(QPaintEvent *) {
 }
 
 void ArcProgress::decrement() {
-    if (this->nSec) {
-        this->nSec--;
+    if (this->nMilliSec) {
+        this->nMilliSec -= 100;
     } else {
         emit timeUp();
     }
 }
+
+void ArcProgress::handleCancel() { nMilliSec = 0; }

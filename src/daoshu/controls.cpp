@@ -1,6 +1,7 @@
 #include "controls.h"
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QtWidgets>
+#include <cassert>
 
 Controls::Controls(QWidget *parent) : QWidget(parent) {
     controlLayout = new QVBoxLayout;
@@ -9,12 +10,10 @@ Controls::Controls(QWidget *parent) : QWidget(parent) {
     hourSpin = new QSpinBox;
     minSpin = new QSpinBox;
     secSpin = new QSpinBox;
-    hourSpin->setValue(0);
     hourSpin->setRange(0, 120);
-    minSpin->setValue(0);
     minSpin->setRange(0, 60);
-    secSpin->setValue(10);
     secSpin->setRange(0, 60);
+    initSpinValues();
     setButton = new QPushButton("Set");
     cancelButton = new QPushButton("Cancel");
     spinLayout->addWidget(hourSpin);
@@ -26,28 +25,46 @@ Controls::Controls(QWidget *parent) : QWidget(parent) {
     controlLayout->addLayout(buttonLayout);
     setLayout(controlLayout);
     connect(setButton, SIGNAL(clicked()), this, SLOT(setButtonClicked()));
+    connect(cancelButton, SIGNAL(clicked()), this, SLOT(cancelButtonClicked()));
+}
+
+void Controls::initSpinValues() {
+    hourSpin->setValue(0);
+    minSpin->setValue(0);
+    secSpin->setValue(3);  // set a timer of 3 seconds by default
 }
 
 void Controls::decrement() {
-    if (!hourSpin->value() && !minSpin->value() && !secSpin->value()) {
-        return;
-    }
-    if (!secSpin->value()) {
-        if (!minSpin->value()) {
-            hourSpin->setValue(hourSpin->value() - 1);
-            minSpin->setValue(59);
-        } else {
-            minSpin->setValue(minSpin->value() - 1);
+    // every tick from QTimer is set at 100ms, so you need 10 ticks before you
+    // can count down 1 second
+    static int _counter = 10;
+    if (_counter == 10) {
+        _counter = 1;
+        if (!hourSpin->value() && !minSpin->value() && !secSpin->value()) {
+            return;
         }
-        secSpin->setValue(59);
+        if (!secSpin->value()) {
+            if (!minSpin->value()) {
+                hourSpin->setValue(hourSpin->value() - 1);
+                minSpin->setValue(59);
+            } else {
+                minSpin->setValue(minSpin->value() - 1);
+            }
+            secSpin->setValue(59);
+        } else {
+            secSpin->setValue(secSpin->value() - 1);
+        }
     } else {
-        secSpin->setValue(secSpin->value() - 1);
+        _counter++;
     }
 }
 
 void Controls::setButtonClicked() {
-    emit valueSet(hourSpin->value() * 3600 + minSpin->value() * 60 +
-                  secSpin->value());
+    int nMilliSec =
+        (hourSpin->value() * 3600 + minSpin->value() * 60 + secSpin->value()) *
+        1000;
+    if (nMilliSec <= 0) return;
+    emit valueSet(nMilliSec);
     disableSpins();
 }
 
@@ -55,14 +72,27 @@ void Controls::enableSpins() {
     hourSpin->setReadOnly(false);
     minSpin->setReadOnly(false);
     secSpin->setReadOnly(false);
+    hourSpin->setStyleSheet("background-color: white");
+    minSpin->setStyleSheet("background-color: white");
+    secSpin->setStyleSheet("background-color: white");
 }
 
 void Controls::disableSpins() {
     hourSpin->setReadOnly(true);
     minSpin->setReadOnly(true);
     secSpin->setReadOnly(true);
+    hourSpin->setStyleSheet("background-color: lightgray");
+    minSpin->setStyleSheet("background-color: lightgray");
+    secSpin->setStyleSheet("background-color: lightgray");
 }
 
 void Controls::handleTimeup() { enableSpins(); }
+void Controls::handleCancel() {
+    enableSpins();
+    initSpinValues();
+}
 
-void Controls::cancelButtonClicked() { qDebug() << "cancelled"; }
+void Controls::cancelButtonClicked() {
+    enableSpins();
+    emit timerCancelled();
+}

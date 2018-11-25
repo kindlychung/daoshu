@@ -6,6 +6,7 @@
             "compilerPath": "/usr/bin/clang",
             "includePath": [
                 "${default}",
+                "${workspaceFolder}/build/include",
                 "${workspaceFolder}/build/include"
             ]
         }

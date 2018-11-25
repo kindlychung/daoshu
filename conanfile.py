@@ -10,13 +10,14 @@ if not os.path.exists(conan_bin_dir):
     os.mkdir(conan_bin_dir)
 
 
+# todo: require libpulse-dev
 class daoshuConan(ConanFile):
     name = "daoshu"
     version = "0.0.1"
     license = "LGPL"
     author = "kaiyin keezhong@qq.com"
     url = "https://github.com/kindlychung/daoshu"
-    description = "An example of using the Qt5 conan package"
+    description = "Count-down timer using Qt5 and libpulse"
     topics = ("cpp", )
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}

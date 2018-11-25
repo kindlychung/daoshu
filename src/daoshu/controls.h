@@ -15,6 +15,7 @@ class Controls : public QWidget {
    private:
     void disableSpins();
     void enableSpins();
+    void initSpinValues();
 
    protected:
     QSpinBox *hourSpin;
@@ -30,7 +31,9 @@ class Controls : public QWidget {
     void cancelButtonClicked();
    public slots:
     void handleTimeup();
+    void handleCancel();
     void decrement();
    signals:
-    void valueSet(int nSec);
+    void valueSet(int nMilliSec);
+    void timerCancelled();
 };

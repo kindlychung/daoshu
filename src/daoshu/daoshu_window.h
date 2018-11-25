@@ -3,7 +3,6 @@
 #include <QtWidgets/QStackedLayout>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
-#include <SFML/Audio.hpp>
 #include "arc_progress.h"
 #include "controls.h"
 
@@ -22,5 +21,5 @@ class DaoshuWindow : public QWidget {
     void startTimer();
     void timeUpAudio();
     void stopTimer();
-    void startCountdown(int nSec);
+    void startCountdown(int nMilliSec);
 };
