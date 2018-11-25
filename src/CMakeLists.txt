@@ -33,7 +33,10 @@ include(cotire)
 find_package(Qt5Core CONFIG REQUIRED)
 find_package(Qt5Widgets CONFIG REQUIRED)
 
-add_executable(${proj_name} daoshu/${proj_name}.cpp ${proj_name}/clock.cpp)
+add_executable(${proj_name} daoshu/${proj_name}.cpp  ${proj_name}/arc_progress.cpp 
+    ${proj_name}/controls.cpp  
+    ${proj_name}/daoshu_window.cpp  
+    )
 message(CONAN_LIBS ": ${CONAN_LIBS}")
 target_link_libraries(${proj_name} ${CONAN_LIBS} Qt5::Core Qt5::Widgets)
 

@@ -1,8 +1,10 @@
 #include <QtWidgets/QApplication>
-#include "clock.h"
-int main(int argc, char *argv[]) {
+#include "daoshu_window.h"
+// #include "controls.h"
+int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
-    AnalogClock clock;
-    clock.show();
+    DaoshuWindow window{300};
+    // Controls window;
+    window.show();
     return app.exec();
 }
