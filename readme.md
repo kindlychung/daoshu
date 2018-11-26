@@ -37,7 +37,11 @@ bin/daoshu
 
 ![](daoshu.png)
 
-# Todo: 
 
-* Make `conan install` work for deployment.
+## Known issues
+
+* Qt5 looks strange in a multiple-display setting, when the displays don't have the same resolution.
+
+## Todo: 
+
 * Package and upload to snapcraft
