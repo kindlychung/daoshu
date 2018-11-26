@@ -1,6 +1,12 @@
 ![daoshu](daoshu_with_text.svg)
 
-An example of using Qt5 conan package in a GUI project.
+A count-down timer written in C++ and Qt5.
+
+## Why
+
+I am not happy with any of the timer apps on my system, so I reinvented the wheel. Why not?
+
+> Tested only on Ubuntu 18.10, your mileage may vary.
 
 ## Compile
 
@@ -18,6 +24,7 @@ conan build ..
 bin/daoshu
 ```
 
-You should be able to see an analog clock app.
+# Todo: 
 
-# todo: 
+* Package and upload to snapcraft
+* Send a notification when time is up (besides playing a sound).
