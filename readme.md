@@ -24,6 +24,10 @@ conan build ..
 bin/daoshu
 ```
 
+## Screencast
+
+![](daoshu.webp)
+
 # Todo: 
 
 * Package and upload to snapcraft
