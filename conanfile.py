@@ -30,7 +30,7 @@ class daoshuConan(ConanFile):
     def system_requirements(self):
         pack_name = None
         if os_info.linux_distro == "ubuntu":
-            pack_name = "libpulse-dev"
+            pack_name = ["libpulse-dev", "libnotify-dev", "libglib2.0-dev"]
         if pack_name:
             installer = SystemPackageTool()
             installer.install(pack_name)

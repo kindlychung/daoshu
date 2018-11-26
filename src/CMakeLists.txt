@@ -27,19 +27,26 @@ if (NOT CMAKE_BUILD_TYPE)
 endif ()
 
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}")
-include(cotire)
-
 
 find_package(Qt5Core CONFIG REQUIRED)
 find_package(Qt5Widgets CONFIG REQUIRED)
 
+FIND_PACKAGE(PkgConfig REQUIRED)
+PKG_CHECK_MODULES(LIBNOTIFY required libnotify>=0.7.6) 
+INCLUDE_DIRECTORIES(${LIBNOTIFY_INCLUDE_DIRS})
+
+# include(cotire)
+
+
+
 add_executable(${proj_name} daoshu/${proj_name}.cpp  ${proj_name}/arc_progress.cpp 
     ${proj_name}/controls.cpp  
     ${proj_name}/daoshu_window.cpp  
+    ${proj_name}/daoshu_notify.cpp  
     ${proj_name}/play_sound.cpp  
     ${proj_name}/bell.o  
     )
 message(CONAN_LIBS ": ${CONAN_LIBS}")
-target_link_libraries(${proj_name} ${CONAN_LIBS} Qt5::Core Qt5::Widgets -lpulse -lpulse-simple)
+target_link_libraries(${proj_name} ${CONAN_LIBS} Qt5::Core Qt5::Widgets -lpulse -lpulse-simple -lnotify -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0)
 
-cotire(${proj_name})
+# cotire(${proj_name})

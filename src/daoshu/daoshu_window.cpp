@@ -1,4 +1,5 @@
 #include "daoshu_window.h"
+#include "daoshu_notify.h"
 #include "play_sound.h"
 
 DaoshuWindow::DaoshuWindow(int width, QWidget *parent) : QWidget(parent) {
@@ -26,6 +27,7 @@ void DaoshuWindow::startTimer() { timer->start(100); }
 void DaoshuWindow::stopTimer() { timer->stop(); }
 void DaoshuWindow::timeUpAudio() {
     timer->stop();
+    notify();
     play_sound(3);
     return;
 }

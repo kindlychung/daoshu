@@ -30,5 +30,5 @@ bin/daoshu
 
 # Todo: 
 
+* Make `conan install` work for deployment.
 * Package and upload to snapcraft
-* Send a notification when time is up (besides playing a sound).
