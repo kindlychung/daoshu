@@ -1,6 +1,8 @@
 
 from conans import ConanFile, CMake, tools
 from pathlib import Path
+from conans.tools import os_info, SystemPackageTool
+
 import os
 
 homedir = Path.home()
@@ -10,7 +12,6 @@ if not os.path.exists(conan_bin_dir):
     os.mkdir(conan_bin_dir)
 
 
-# todo: require libpulse-dev
 class daoshuConan(ConanFile):
     name = "daoshu"
     version = "0.0.1"
@@ -25,6 +26,14 @@ class daoshuConan(ConanFile):
     requires = ("Qt/5.11.2.1@jzien/dev", "docopt/0.6.2@conan/stable")
     generators = "cmake"
     exports_sources = "src/*"
+
+    def system_requirements(self):
+        pack_name = None
+        if os_info.linux_distro == "ubuntu":
+            pack_name = "libpulse-dev"
+        if pack_name:
+            installer = SystemPackageTool()
+            installer.install(pack_name)
 
     def build(self):
         cmake = CMake(self)

@@ -1,4 +1,4 @@
-# daoshu 玩转Qt
+![daoshu](daoshu_with_text.svg)
 
 An example of using Qt5 conan package in a GUI project.
 
@@ -19,3 +19,5 @@ bin/daoshu
 ```
 
 You should be able to see an analog clock app.
+
+# todo: 

@@ -4,7 +4,7 @@
 DaoshuWindow::DaoshuWindow(int width, QWidget *parent) : QWidget(parent) {
     arcUI = new ArcProgress(width);
     setFixedWidth(width);
-    setMinimumHeight(width);
+    setFixedHeight(width * 1.5);
     controls = new Controls;
     layout = new QVBoxLayout;
     layout->addWidget(arcUI);

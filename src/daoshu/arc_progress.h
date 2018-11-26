@@ -8,6 +8,9 @@ class ArcProgress : public QWidget {
     ArcProgress(int width, QWidget *parent = 0);
     virtual ~ArcProgress(){};
 
+   private:
+    bool blink = false;
+
    protected:
     void paintEvent(QPaintEvent *event) override;
     int initWidth;
@@ -22,7 +25,6 @@ class ArcProgress : public QWidget {
     void timeUp();
 
    public:
-    // todo: use Milliseconds instead
     void setSeconds(int c) {
         nMilliSec = c;
         totalMilliSec = c;

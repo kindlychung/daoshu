@@ -3,16 +3,22 @@
 #include <QtWidgets/QtWidgets>
 #include <cassert>
 
-Controls::Controls(QWidget *parent) : QWidget(parent) {
+Controls::Controls(QWidget* parent) : QWidget(parent) {
     controlLayout = new QVBoxLayout;
     spinLayout = new QHBoxLayout;
     buttonLayout = new QHBoxLayout;
     hourSpin = new QSpinBox;
     minSpin = new QSpinBox;
     secSpin = new QSpinBox;
-    hourSpin->setRange(0, 120);
+    hourSpin->setRange(0, 24);
     minSpin->setRange(0, 60);
     secSpin->setRange(0, 60);
+    hourSpin->setSuffix("H");
+    minSpin->setSuffix("M");
+    secSpin->setSuffix("S");
+    hourSpin->setStyleSheet("font-size: 34px");
+    minSpin->setStyleSheet("font-size: 34px");
+    secSpin->setStyleSheet("font-size: 34px");
     initSpinValues();
     setButton = new QPushButton("Set");
     cancelButton = new QPushButton("Cancel");
@@ -68,22 +74,35 @@ void Controls::setButtonClicked() {
     disableSpins();
 }
 
+QString Controls::enabledSpinStyle() {
+    return QString("background-color: white; font-size: 34px");
+}
+QString Controls::disabledSpinStyle() {
+    return QString("background-color: lightgray; font-size: 34px");
+}
+
 void Controls::enableSpins() {
     hourSpin->setReadOnly(false);
     minSpin->setReadOnly(false);
     secSpin->setReadOnly(false);
-    hourSpin->setStyleSheet("background-color: white");
-    minSpin->setStyleSheet("background-color: white");
-    secSpin->setStyleSheet("background-color: white");
+    auto style = enabledSpinStyle();
+    hourSpin->setStyleSheet(style);
+    minSpin->setStyleSheet(style);
+    secSpin->setStyleSheet(style);
 }
 
 void Controls::disableSpins() {
-    hourSpin->setReadOnly(true);
-    minSpin->setReadOnly(true);
-    secSpin->setReadOnly(true);
-    hourSpin->setStyleSheet("background-color: lightgray");
-    minSpin->setStyleSheet("background-color: lightgray");
-    secSpin->setStyleSheet("background-color: lightgray");
+    auto style = disabledSpinStyle();
+    for (auto& spin : (QSpinBox*[]){hourSpin, minSpin, secSpin}) {
+        spin->setReadOnly(true);
+        spin->setStyleSheet(style);
+    }
+    // hourSpin->setReadOnly(true);
+    // minSpin->setReadOnly(true);
+    // secSpin->setReadOnly(true);
+    // hourSpin->setStyleSheet("background-color: lightgray");
+    // minSpin->setStyleSheet("background-color: lightgray");
+    // secSpin->setStyleSheet("background-color: lightgray");
 }
 
 void Controls::handleTimeup() { enableSpins(); }

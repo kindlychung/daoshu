@@ -5,6 +5,7 @@ int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
     DaoshuWindow window{300};
     // Controls window;
+    window.setWindowTitle("Daoshu");
     window.show();
     return app.exec();
 }

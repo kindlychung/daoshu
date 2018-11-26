@@ -16,6 +16,8 @@ class Controls : public QWidget {
     void disableSpins();
     void enableSpins();
     void initSpinValues();
+    QString enabledSpinStyle();
+    QString disabledSpinStyle();
 
    protected:
     QSpinBox *hourSpin;
