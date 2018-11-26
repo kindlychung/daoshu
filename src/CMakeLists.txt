@@ -11,6 +11,10 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 
+configure_file(daoshu.desktop dist/daoshu.desktop copyonly)
+configure_file(daoshu.svg dist/daoshu.svg copyonly)
+configure_file(daoshu_small.svg dist/daoshu_small.svg copyonly)
+
 project(${proj_name} CXX)
 set(conan_cmake_file "${CMAKE_BINARY_DIR}/conanbuildinfo.cmake")
 if(EXISTS ${conan_cmake_file})

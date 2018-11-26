@@ -4,6 +4,7 @@ from pathlib import Path
 from conans.tools import os_info, SystemPackageTool
 
 import os
+import shutil
 
 homedir = Path.home()
 conan_dir = os.path.join(homedir, ".conan")
@@ -11,6 +12,14 @@ conan_bin_dir = os.path.join(conan_dir, "bin")
 local_app_dir = os.path.join(homedir, ".local", "share", "applications")
 if not os.path.exists(conan_bin_dir):
     os.mkdir(conan_bin_dir)
+
+
+def icon_dir(i):
+    p = os.path.join(homedir, ".local", "share", "icons",
+                     "hicolor", "{}x{}".format(i, i), "apps")
+    if not os.path.exists(p):
+        Path(p).mkdir(parents=True, exist_ok=True)
+    return p
 
 
 class daoshuConan(ConanFile):
@@ -55,3 +64,7 @@ class daoshuConan(ConanFile):
     def deploy(self):
         self.copy("*", src="bin", dst=conan_bin_dir)
         self.copy("daoshu.desktop", src="dist", dst=local_app_dir)
+        for i_small in [16, 32, 48, 64]:
+            self.copy("daoshu_small.svg", src="dist", dst=icon_dir(i_small))
+        for i_big in [128, 256]:
+            self.copy("daoshu.svg", src="dist", dst=icon_dir(i_big))

@@ -8,7 +8,16 @@ I am not happy with any of the timer apps on my system, so I reinvented the whee
 
 > Tested only on Ubuntu 18.10, your mileage may vary.
 
-## Compile
+## Install with `conan`
+
+* Set up remote: https://bintray.com/jzien/conan
+* `conan install --build missing  -r jzien daoshu/0.0.3@jzien/dev` (assuming that you have set the remote name as `jzien` in the previous step)
+* Click `activities` in Gnome and search for `daoshu`.
+
+
+## Build from source manually
+
+### Compile
 
 ```sh
 cd daoshu
@@ -18,7 +27,7 @@ conan install --build missing ..
 conan build ..
 ```
 
-## Run
+### Run
 
 ```sh
 bin/daoshu
