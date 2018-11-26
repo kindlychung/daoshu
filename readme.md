@@ -26,7 +26,7 @@ bin/daoshu
 
 ## Screencast
 
-![](daoshu.webp)
+![](daoshu.png)
 
 # Todo: 
 
