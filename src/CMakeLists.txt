@@ -33,11 +33,35 @@ find_package(Qt5Widgets CONFIG REQUIRED)
 
 FIND_PACKAGE(PkgConfig REQUIRED)
 PKG_CHECK_MODULES(LIBNOTIFY required libnotify>=0.7.6) 
+PKG_CHECK_MODULES(LIBPULSE required libpulse>=12.0) 
 INCLUDE_DIRECTORIES(${LIBNOTIFY_INCLUDE_DIRS})
+LINK_DIRECTORIES(${LIBNOTIFY_LIBRARY_DIRS})
+
+include(LibFindMacros)
+libfind_pkg_check_modules(LibPulse_PKGCONF libpulse)
+find_path(LibPulse_INCLUDE_DIR
+  NAMES pulse/error.h
+  HINTS ${LibPulse_PKGCONF_INCLUDE_DIRS}
+)
+find_library(LibPulse_LIBRARY
+  NAMES pulse
+  HINTS ${LibPulse_PKGCONF_LIBRARY_DIRS}
+)
+libfind_pkg_check_modules(LibPulseSimple_PKGCONF libpulse-simple)
+find_path(LibPulseSimple_INCLUDE_DIR
+  NAMES pulse/simple.h
+  HINTS ${LibPulseSimple_PKGCONF_INCLUDE_DIRS}
+)
+find_library(LibPulseSimple_LIBRARY
+  NAMES pulse-simple
+  HINTS ${LibPulseSimple_PKGCONF_LIBRARY_DIRS}
+)
+INCLUDE_DIRECTORIES(${LibPulseSimple_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(${LibPulse_INCLUDE_DIR})
+message(pulse_simple_libs ": ${LibPulseSimple_LIBRARY}")
+message(pulse_libs ": ${LibPulse_LIBRARY}")
 
 # include(cotire)
-
-
 
 add_executable(${proj_name} daoshu/${proj_name}.cpp  ${proj_name}/arc_progress.cpp 
     ${proj_name}/controls.cpp  
@@ -47,6 +71,7 @@ add_executable(${proj_name} daoshu/${proj_name}.cpp  ${proj_name}/arc_progress.c
     ${proj_name}/bell.o  
     )
 message(CONAN_LIBS ": ${CONAN_LIBS}")
-target_link_libraries(${proj_name} ${CONAN_LIBS} Qt5::Core Qt5::Widgets -lpulse -lpulse-simple -lnotify -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0)
+# target_link_libraries(${proj_name} ${CONAN_LIBS} Qt5::Core Qt5::Widgets -lpulse -lpulse-simple ${LIBNOTIFY_LIBRARIES})
+target_link_libraries(${proj_name} ${CONAN_LIBS} Qt5::Core Qt5::Widgets ${LibPulse_LIBRARY} ${LibPulseSimple_LIBRARY} ${LIBNOTIFY_LIBRARIES})
 
 # cotire(${proj_name})
