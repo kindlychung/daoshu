@@ -1,14 +1,10 @@
-
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.8)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(proj_name daoshu)
 set(CMAKE_CXX_FLAGS "-g") 
-
-set(CMAKE_POSITION_INDEpENDENT_CODE ON)
-# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fpic")
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpic")
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -32,34 +28,41 @@ find_package(Qt5Core CONFIG REQUIRED)
 find_package(Qt5Widgets CONFIG REQUIRED)
 
 FIND_PACKAGE(PkgConfig REQUIRED)
-PKG_CHECK_MODULES(LIBNOTIFY required libnotify>=0.7.6) 
-PKG_CHECK_MODULES(LIBPULSE required libpulse>=12.0) 
-INCLUDE_DIRECTORIES(${LIBNOTIFY_INCLUDE_DIRS})
-LINK_DIRECTORIES(${LIBNOTIFY_LIBRARY_DIRS})
+PKG_CHECK_MODULES(LIBNOTIFY libnotify>=0.7.6) 
+message(libnotify_inc ": ${libnotify_include_dirs}")
+message(libnotify_libs ": ${libnotify_libraries}")
 
 include(LibFindMacros)
-libfind_pkg_check_modules(LibPulse_PKGCONF libpulse)
-find_path(LibPulse_INCLUDE_DIR
+
+libfind_pkg_check_modules(libpulse_PKGCONF libpulse)
+find_path(libpulse_INCLUDE_DIR
   NAMES pulse/error.h
-  HINTS ${LibPulse_PKGCONF_INCLUDE_DIRS}
+  HINTS ${libpulse_PKGCONF_INCLUDE_DIRS}
 )
-find_library(LibPulse_LIBRARY
+find_library(libpulse_LIBRARY
   NAMES pulse
-  HINTS ${LibPulse_PKGCONF_LIBRARY_DIRS}
+  HINTS ${libpulse_PKGCONF_LIBRARY_DIRS}
 )
-libfind_pkg_check_modules(LibPulseSimple_PKGCONF libpulse-simple)
-find_path(LibPulseSimple_INCLUDE_DIR
+
+libfind_pkg_check_modules(libpulsesimple_PKGCONF libpulse-simple)
+find_path(libpulsesimple_INCLUDE_DIR
   NAMES pulse/simple.h
-  HINTS ${LibPulseSimple_PKGCONF_INCLUDE_DIRS}
+  HINTS ${libpulsesimple_PKGCONF_INCLUDE_DIRS}
 )
-find_library(LibPulseSimple_LIBRARY
+find_library(libpulsesimple_LIBRARY
   NAMES pulse-simple
-  HINTS ${LibPulseSimple_PKGCONF_LIBRARY_DIRS}
+  HINTS ${libpulsesimple_PKGCONF_LIBRARY_DIRS}
 )
-INCLUDE_DIRECTORIES(${LibPulseSimple_INCLUDE_DIR})
-INCLUDE_DIRECTORIES(${LibPulse_INCLUDE_DIR})
-message(pulse_simple_libs ": ${LibPulseSimple_LIBRARY}")
-message(pulse_libs ": ${LibPulse_LIBRARY}")
+
+message(libpulse_inc ":${libpulse_INCLUDE_DIR}")
+message(libpulse_libs ": ${libpulse_LIBRARY}")
+message(libpulse_simple_inc ":${libpulsesimple_INCLUDE_DIR}")
+message(libpulse_simple_libs ": ${libpulsesimple_LIBRARY}")
+
+pkg_search_module(glib REQUIRED glib-2.0)
+message(glib_inc ": ${glib_INCLUDE_DIRS}")
+message(glib_libs ": ${glib_LDFLAGS}")
+
 
 # include(cotire)
 
@@ -71,7 +74,21 @@ add_executable(${proj_name} daoshu/${proj_name}.cpp  ${proj_name}/arc_progress.c
     ${proj_name}/bell.o  
     )
 message(CONAN_LIBS ": ${CONAN_LIBS}")
-# target_link_libraries(${proj_name} ${CONAN_LIBS} Qt5::Core Qt5::Widgets -lpulse -lpulse-simple ${LIBNOTIFY_LIBRARIES})
-target_link_libraries(${proj_name} ${CONAN_LIBS} Qt5::Core Qt5::Widgets ${LibPulse_LIBRARY} ${LibPulseSimple_LIBRARY} ${LIBNOTIFY_LIBRARIES})
+
+target_include_directories(${proj_name} PRIVATE 
+  ${glib_INCLUDE_DIRS}  
+  ${LIBNOTIFY_INCLUDE_DIRS} 
+  ${libpulsesimple_PKGCONF_INCLUDE_DIRS}    
+  )
+target_link_libraries(${proj_name} 
+  ${CONAN_LIBS} 
+  Qt5::Core
+  Qt5::Widgets
+  ${libpulse_LIBRARY} 
+  ${libpulsesimple_LIBRARY} 
+  ${LIBNOTIFY_LIBRARIES} 
+  ${glib_LDFLAGS}
+  )
+
 
 # cotire(${proj_name})
