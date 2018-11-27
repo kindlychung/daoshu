@@ -33,7 +33,7 @@ class daoshuConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
     default_options = "shared=False"
-    requires = ("Qt/5.11.2.1@jzien/dev", "docopt/0.6.2@conan/stable",)
+    requires = ("docopt/0.6.2@conan/stable",)
     generators = "cmake"
     exports_sources = "src/*"
 
@@ -41,7 +41,7 @@ class daoshuConan(ConanFile):
         pack_name = None
         if os_info.linux_distro == "ubuntu":
             pack_name = ["libpulse-dev", "libnotify-dev",
-                         "libglib2.0-dev", "libqt5widgets5"]
+                         "libglib2.0-dev", "qtbase5-dev"]
         if pack_name:
             installer = SystemPackageTool()
             installer.install(pack_name)
