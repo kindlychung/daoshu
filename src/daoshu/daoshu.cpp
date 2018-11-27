@@ -3,7 +3,7 @@
 // #include "controls.h"
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
-    DaoshuWindow window{300};
+    DaoshuWindow window{600};
     // Controls window;
     window.setWindowTitle("Daoshu");
     window.show();

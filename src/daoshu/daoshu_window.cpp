@@ -3,14 +3,15 @@
 #include "play_sound.h"
 
 DaoshuWindow::DaoshuWindow(int width, QWidget *parent) : QWidget(parent) {
+    auto expandPolicy = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     arcUI = new ArcProgress(width);
-    setFixedWidth(width);
-    setFixedHeight(width * 1.5);
     controls = new Controls;
     layout = new QVBoxLayout;
     layout->addWidget(arcUI);
     layout->addWidget(controls);
-    layout->setAlignment(Qt::AlignmentFlag::AlignCenter);
+    layout->setAlignment(arcUI, Qt::AlignmentFlag::AlignHCenter);
+    layout->setAlignment(controls, Qt::AlignmentFlag::AlignHCenter);
+    controls->setSizePolicy(expandPolicy);
     setLayout(layout);
     timer = new QTimer;
     connect(timer, SIGNAL(timeout()), controls, SLOT(decrement()));
