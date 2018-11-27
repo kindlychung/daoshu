@@ -38,13 +38,14 @@ class daoshuConan(ConanFile):
     exports_sources = "src/*"
 
     def system_requirements(self):
-        pack_name = None
+        pack_list = None
         if os_info.linux_distro == "ubuntu":
-            pack_name = ["libpulse-dev", "libnotify-dev",
+            pack_list = ["libpulse-dev", "libnotify-dev",
                          "libglib2.0-dev", "qtbase5-dev"]
-        if pack_name:
-            installer = SystemPackageTool()
-            installer.install(pack_name)
+        if pack_list:
+            for p in pack_list:
+                installer = SystemPackageTool()
+                installer.install(p)
 
     def build(self):
         cmake = CMake(self)
