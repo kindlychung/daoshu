@@ -1,4 +1,0 @@
-/home/kaiyin/cProjects/daoshu/build-src-Desktop-Default/CMakeFiles/rebuild_cache.dir
-/home/kaiyin/cProjects/daoshu/build-src-Desktop-Default/CMakeFiles/daoshu.dir
-/home/kaiyin/cProjects/daoshu/build-src-Desktop-Default/CMakeFiles/edit_cache.dir
-/home/kaiyin/cProjects/daoshu/build-src-Desktop-Default/CMakeFiles/daoshu_autogen.dir

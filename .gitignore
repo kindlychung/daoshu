@@ -7,4 +7,5 @@ BUCKAROO_DEPS
 **/build
 **/*exe
 *.swp
+build*
 
