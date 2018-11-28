@@ -14,7 +14,7 @@ Controls::Controls(QWidget* parent) : QWidget(parent) {
     minSpin->setSuffix("M");
     secSpin->setSuffix("S");
     for (auto w : (QSpinBox*[]){hourSpin, minSpin, secSpin}) {
-        w->setRange(0, 24);
+        w->setRange(0, 59);
         w->setStyleSheet("font-size: 64px");
         w->setSizePolicy(
             QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed));
