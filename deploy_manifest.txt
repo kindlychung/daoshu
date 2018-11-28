@@ -1,9 +1,0 @@
-1543399349
-/home/kaiyin/.conan/bin/daoshu: 1edd6cdb2e50c8a90dc98af17a678680
-/home/kaiyin/.local/share/applications/daoshu.desktop: 553c76bc0d615da8feea27890497c444
-/home/kaiyin/.local/share/icons/hicolor/128x128/apps/daoshu.svg: b8311b62bac483477f97407aedbb6885
-/home/kaiyin/.local/share/icons/hicolor/16x16/apps/daoshu_small.svg: 973f14d26c37670bc688ee289dbfc63f
-/home/kaiyin/.local/share/icons/hicolor/256x256/apps/daoshu.svg: b8311b62bac483477f97407aedbb6885
-/home/kaiyin/.local/share/icons/hicolor/32x32/apps/daoshu_small.svg: 973f14d26c37670bc688ee289dbfc63f
-/home/kaiyin/.local/share/icons/hicolor/48x48/apps/daoshu_small.svg: 973f14d26c37670bc688ee289dbfc63f
-/home/kaiyin/.local/share/icons/hicolor/64x64/apps/daoshu_small.svg: 973f14d26c37670bc688ee289dbfc63f

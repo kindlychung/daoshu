@@ -8,4 +8,4 @@ BUCKAROO_DEPS
 **/*exe
 *.swp
 build*
-
+deploy_manifest.txt
