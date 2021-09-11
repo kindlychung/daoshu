@@ -28,8 +28,9 @@ void DaoshuWindow::startTimer() { timer->start(100); }
 void DaoshuWindow::stopTimer() { timer->stop(); }
 void DaoshuWindow::timeUpAudio() {
     timer->stop();
-    notify();
-    play_sound(3);
+	auto s = controls->msgField->text();
+    notify(s);
+    play_sound(7);
     return;
 }
 

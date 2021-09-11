@@ -1,5 +1,6 @@
 #pragma once
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QVBoxLayout>
@@ -9,15 +10,21 @@ class Controls : public QWidget {
     Q_OBJECT
 
    public:
+    QLineEdit *msgField;
     Controls(QWidget *parent = 0);
     virtual ~Controls(){};
 
    private:
     void disableSpins();
     void enableSpins();
+    void disableMsgField();
+    void enableMsgField();
     void initSpinValues();
     QString enabledSpinStyle();
     QString disabledSpinStyle();
+	int hours = 0;
+	int minutes = 0;
+	int seconds = 3;
 
    protected:
     QSpinBox *hourSpin;

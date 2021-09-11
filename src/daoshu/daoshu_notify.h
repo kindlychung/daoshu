@@ -1,2 +1,3 @@
 #pragma once
-bool notify();
+#include <QtCore/QString>
+bool notify(QString);

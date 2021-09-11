@@ -33,7 +33,7 @@ class daoshuConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
     default_options = "shared=False"
-    requires = ("docopt/0.6.2@conan/stable",)
+    requires = ("docopt.cpp/0.6.3",)
     generators = "cmake"
     exports_sources = "src/*"
 
@@ -49,6 +49,7 @@ class daoshuConan(ConanFile):
 
     def build(self):
         cmake = CMake(self)
+        print(str(cmake.build_config))
         cmake.configure(source_folder="src")
         cmake.build()
 
